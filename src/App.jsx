@@ -8,9 +8,11 @@ import NaviBar from "./component/NaviBar.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SiteSelect from "./component/SiteSelect.jsx";
 import HomePage from "./sites/HomePage.jsx";
+import AdminPage from "./sites/AdminPage.jsx";
 import MainLayout from "./layout/MainLayout.jsx";
 import ProfileLayout from "./layout/ProfileLayout.jsx";
 import AddPost from "./component/AddPost.jsx";
+import AdminLayout from "./layout/AdminLayout.jsx";
 
 function App() {
     return (
@@ -25,6 +27,9 @@ function App() {
                 </Route>
                 <Route path="/" element={<ProfileLayout />} >
                     <Route path="/ProfilePage" element={<ProfilePage />} />
+                </Route>
+                <Route path="/" element={<AdminLayout />} >
+                    <Route path="/AdminPage" element={<AdminPage />} />
                 </Route>
             </Routes>
         </main>
