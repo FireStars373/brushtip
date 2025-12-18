@@ -1,0 +1,106 @@
+
+.change-profile-label{
+    font-weight: bold;
+    font-size: x-large;
+    border-bottom: #131a17 2px solid;
+    width: 100%;
+    margin-bottom: 1rem;
+
+}
+.change-profile-btn{
+    padding: 8px 16px;
+    background-color: #1d2b27;
+    color:  #d4e0d6;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.change-profile-btn:hover{
+    background-color: #131a10;
+}
+
+.change-post-textarea, .change-post-select {
+    width: 100%;
+    min-height: 100px;
+    background-color: #1d2b27 !important;
+    color: #ffffff !important;                     /* white text */
+    border: 1px solid #294a34 !important;          /* subtle border */
+    border-radius: 10px;                /* smooth corners */
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-family: inherit;
+    box-shadow: none;
+}
+
+/* Placeholder text */
+.change-post-textarea::placeholder,.change-post-select::placeholder {
+    color: #d4e0d6 !important;
+}
+
+/* Focus effect */
+.change-post-textarea:focus,.change-post-select:focus {
+    outline: none;
+    border-color: #5dc48b !important;
+    box-shadow: 0 0 10px rgba(93, 196, 139, 0.4);
+    background-color: #22382f !important;
+}
+
+.change-post-select option {
+    background-color: #1d2b27 !important;
+    color: #ffffff !important;
+}
+/* Placeholder style (first option) */
+.change-post-select option[value=""] {
+    color: #d4e0d6 !important;
+}
+
+
+.profile-banner{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 20rem; /* desired height */
+}
+.profile-banner-img{
+    width: 100%;
+    height: 95%;
+    object-fit: cover; /* 🔥 this crops instead of squishing */
+    opacity: 0.8;
+    position: absolute; /* put it behind other elements */
+    z-index: -1; /* send behind text/buttons */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 10);
+}
+.profile-info{
+    position: absolute;
+    padding: 1rem;
+    border-radius: 12px;
+    max-width: 75rem;
+    width: 90%;
+    background-color:#263d32;
+    margin: 3rem;
+}
+.profile-name{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.profile-name h2 {
+    flex-grow: 1;
+    margin: auto;
+    font-size: 20pt;
+}
+.profile-name img {
+    width: 150px;
+    height: 150px;
+    margin-right: 2rem;
+    border: 1px solid black;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 10);
+}
+
+

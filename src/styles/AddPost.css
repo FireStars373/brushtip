@@ -1,0 +1,93 @@
+/* Floating Button */
+.add-post-btn {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    width: 64px;
+    height: 64px;
+    border: none;
+    border-radius: 10px;
+    color: #263d32;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.add-post-btn:hover {
+    color: #294a34; /* darker blue */
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-post-container {
+    background: #2b5744;
+    border-radius: 15px;
+    width: 50rem;
+    padding: 2rem;
+    margin: 1.5rem;
+    z-index: 10000; /* ✅ ensure modal content appears above overlay */
+}
+
+/* Title */
+.modal-title {
+    font-size: 24pt;
+    font-weight: bold;
+}
+
+/* Form */
+.post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.add-btn{
+    padding: 8px 16px;
+    background-color: #1d2b27;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.add-btn:hover {
+    background-color: #131a10;
+}
+
+.post-form input[type="text"],
+.post-form textarea {
+    width: 100%;
+    background-color: #1d2b27;
+    color: #ffffff;
+    border: 1px solid #294a34;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    transition: all 0.3s ease;
+    box-shadow: none;
+}
+
+.post-form input[type="text"]::placeholder,
+.post-form textarea::placeholder {
+    color: #d4e0d6;
+}
+
+/* Focus effect */
+.post-form input[type="text"]:focus,
+.post-form textarea:focus {
+    outline: none;
+    border-color: #5dc48b;
+    box-shadow: 0 0 10px rgba(93, 196, 139, 0.4);
+    background-color: #22382f;
+}

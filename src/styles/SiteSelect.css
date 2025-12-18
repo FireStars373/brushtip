@@ -1,0 +1,13 @@
+.site-select-card{
+    background-color: #2b5744;
+    margin: 3rem;
+    width: 85%;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 10);
+}
+li{
+    list-style: none;
+    font-size: 14pt;
+    padding: 0.1rem;
+}
