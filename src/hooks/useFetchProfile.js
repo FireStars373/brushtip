@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 const BACKEND_URL = "http://localhost:5000/api/users/profile";
 
+
 export default function useFetchProfile() {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -13,7 +13,7 @@ export default function useFetchProfile() {
                 const token = localStorage.getItem("token");
                 if (!token) throw new Error("Not logged in");
 
-                const res = await fetch("http://localhost:5000/api/users/test", {
+                const res = await fetch(`${BACKEND_URL}`, {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -24,10 +24,10 @@ export default function useFetchProfile() {
                 if (!res.ok) throw new Error(data.message || "Failed to fetch user");
                 setUser(data);
 
-
             } catch (err) {
                 setError(`Error fetching users data: ${err.message}`);
                 console.error("Error details:", err);
+            } finally {
                 setLoading(false);
             }
         };
@@ -35,5 +35,6 @@ export default function useFetchProfile() {
         fetchUser();
     }, []);
 
-    return { user};
+    return { user, loading, error };
 }
+

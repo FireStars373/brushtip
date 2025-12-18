@@ -8,8 +8,12 @@ import useFetchProfile from "../hooks/useFetchProfile.js";
 import { useEffect, useState } from "react";
 function ProfileLayout() {
     //temp data if nothing fucking works
-    const {user, loading, error } = useFetchProfile();	
-	const imgURL = "http://localhost:5000/";
+    const {data, loading, error } = useFetchProfile();	
+	const [LoggedInUser, setLoggedInUser] = useState(null);
+	useEffect(() => {
+		setLoggedInUser(data);
+	}, [data]);
+
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
@@ -17,16 +21,16 @@ function ProfileLayout() {
     return (
         <>
             <div className="profile-banner">
-                <img className="profile-banner-img" src={imgURL+user.banner_img} alt="profile picture"/>
+                <img className="profile-banner-img" src={BannerPicture} alt="profile picture"/>
                 <div className="profile-info">
-                    <Profile User={{picture: user.profile_img, name: user.username, profile_description: user.description}}/>
+                    <Profile User={{picture: ProfilePicture, name: LoggedInUser.username, profile_description: LoggedInUser.description}}/>
                 </div>
             </div>
 
             <div style={{display: "flex", justifyContent: "center",}}>
                 <div
                     style={{backgroundColor:'#263d32', margin: "3rem", padding: "1rem", borderRadius:"12px", maxWidth: "75rem",  width: "75rem",}}>
-                    <Outlet context={{posts: user.posts}}/>
+                    <Outlet context={{posts: LoggedInUser.posts}}/>
                 </div>
             </div>
         </>

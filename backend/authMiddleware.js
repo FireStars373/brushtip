@@ -4,6 +4,7 @@ const JWT_SECRET = "supersecretkey"; // use process.env.JWT_SECRET in production
 
 export default function verifyToken(req, res, next) {
     console.log("🔹 verifyToken middleware triggered");
+	if (req.method === "OPTIONS") return res.sendStatus(200);
     const authHeader = req.headers.authorization;
     if (!authHeader) return res.status(401).json({ message: "No token provided" });
 
