@@ -10,12 +10,13 @@ function Profile({User}){
     }
     const [show, setShow] = useState(false);
 
+	const imgURL = "http://localhost:5000/";
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     return(
         <div className="profile-card">
             <div className="profile-name">
-                <img src={User.picture} alt="user image" />
+                <img src={imgURL+ User.picture} alt="user image" />
                 <h2 style={{ color: "#d4e0d6"}}>@{User.name}</h2>
                 <Settings style={{marginRight: "0.5rem", marginBottom: "6rem", color: "#131a17"}} size={38} onClick={handleShow}/>
             </div>

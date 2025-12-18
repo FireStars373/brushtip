@@ -3,7 +3,8 @@ import React, {useState} from "react";
 import "../styles/Login.css";
 import {data} from "react-router-dom";
 
-function LoginForm() {
+
+function LoginForm({handleClose}) {
 
     const [isRegister, setIsRegister] = useState(false);
     const [email, setEmail] = useState("");
@@ -49,8 +50,8 @@ function LoginForm() {
 
             localStorage.setItem("token", data.token);
             localStorage.setItem("user", JSON.stringify(data.user));
-
-            setMessage(localStorage.getItem("token"));
+			handleClose(false);
+           // setMessage(localStorage.getItem("token"));
         } catch (err) {
             setMessage(`${err.message}`);
         }
