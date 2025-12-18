@@ -54,7 +54,7 @@ function AddPost() {
             <form className="post-form" onSubmit={handlePost}>
               <input type="text" placeholder="Post title" value={title} onChange={(e) => setTitle(e.target.value)} />
               <textarea placeholder="Write description..." value={description} onChange={(e) => setDescription(e.target.value)} />
-              <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
+              <input className="change-profile-btn" type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
               <button type="submit" className="add-btn">Submit</button>
             </form>
           </div>

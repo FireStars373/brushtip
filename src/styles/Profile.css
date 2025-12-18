@@ -8,11 +8,11 @@
 
 }
 .change-profile-btn{
-    padding: 8px 16px;
     background-color: #1d2b27;
     color:  #d4e0d6;
     border: none;
     border-radius: 10px;
+    flex: 25px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -20,6 +20,46 @@
 
 .change-profile-btn:hover{
     background-color: #131a10;
+}
+/* Style the button part */
+.change-profile-btn::file-selector-button {
+    padding: 8px 16px;
+    background-color: #1d2b27;
+    color: #d4e0d6;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 12px;
+}
+
+.delete-profile-btn{
+    padding: 8px 16px;
+    background-color: #670909;
+    color:  #d4e0d6;
+    border: none;
+    border-radius: 10px;
+    flex: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.delete-profile-btn:hover{
+    background-color: #400606;
+}
+
+.change-input{
+    width: 100%;
+    background-color: #1d2b27 !important;
+    color: #ffffff !important;                     /* white text */
+    border: 1px solid #294a34 !important;          /* subtle border */
+    border-radius: 10px;                /* smooth corners */
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-family: inherit;
+    box-shadow: none;
 }
 
 .change-post-textarea, .change-post-select {
@@ -36,12 +76,12 @@
 }
 
 /* Placeholder text */
-.change-post-textarea::placeholder,.change-post-select::placeholder {
+.change-profile-btn::placeholder,.change-input::placeholder,.change-post-textarea::placeholder,.change-post-select::placeholder {
     color: #d4e0d6 !important;
 }
 
 /* Focus effect */
-.change-post-textarea:focus,.change-post-select:focus {
+.change-profile-btn:focus, .change-input:focus,.change-post-textarea:focus,.change-post-select:focus {
     outline: none;
     border-color: #5dc48b !important;
     box-shadow: 0 0 10px rgba(93, 196, 139, 0.4);

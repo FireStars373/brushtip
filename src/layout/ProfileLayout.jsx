@@ -1,11 +1,7 @@
 import {Outlet} from "react-router-dom";
 import "../styles/Profile.css"
 import Profile from "../component/Profile.jsx";
-import ProfilePicture from "../assets/TempProfilePic.png";
-import BannerPicture from "../assets/TempBannerPic.jpg";
-import useFetchUsers from "../hooks/useFetchUsers.js";
 import useFetchProfile from "../hooks/useFetchProfile.js";
-import { useEffect, useState } from "react";
 function ProfileLayout() {
     //temp data if nothing fucking works
     const {user, loading, error } = useFetchProfile();	

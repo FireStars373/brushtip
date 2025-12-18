@@ -92,7 +92,6 @@ const handleSubmit = async (e) => {
           <div className="profile-post">
             <div className="profile-post-image">
               <img src={url + post.image} alt={post.title} />
-              {console.log(post.id)}
             </div>
             <div className="profile-post-overlay">
               <div
@@ -103,14 +102,11 @@ const handleSubmit = async (e) => {
                   alignItems: "start",
                 }}
               >
-                <h4
-                  style={{
-                    margin: 0,
-                    wordBreak: "break-word",
-                  }}
-                >
-                  {post.title}
-                </h4>
+                <h4 style={{ margin: 0,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    minWidth: 0}}>{post.title}</h4>
 
                 <div style={{ display: "flex", gap: "6px" }}>
                   <Trash onClick={() => handleDelete(post.id)} />
@@ -137,7 +133,7 @@ const handleSubmit = async (e) => {
             <form className="post-form" onSubmit={handleSubmit}>
               <input type="text" placeholder="Post title" value={title} onChange={(e) => setTitle(e.target.value)} />
               <textarea placeholder="Write description..." value={description} onChange={(e) => setDescription(e.target.value)} />
-              <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
+              <input className="change-profile-btn" type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
               <button type="submit" className="add-btn">Save Changes</button>
             </form>
           </div>

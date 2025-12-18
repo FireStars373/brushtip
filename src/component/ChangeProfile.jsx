@@ -88,7 +88,8 @@ function ChangeProfile() {
 
       <Form.Label className="change-profile-label">Change Banner</Form.Label>
       <InputGroup className="mb-3">
-        <Form.Control
+        <input
+            className="change-profile-btn"
           type="file"
           accept="image/*"
           onChange={(e) => setBannerFile(e.target.files[0])}
@@ -97,7 +98,8 @@ function ChangeProfile() {
 
       <Form.Label className="change-profile-label">Change Profile Picture</Form.Label>
       <InputGroup className="mb-3">
-        <Form.Control
+        <input
+            className="change-profile-btn"
           type="file"
           accept="image/*"
           onChange={(e) => setProfileFile(e.target.files[0])}
@@ -109,6 +111,7 @@ function ChangeProfile() {
         <Form.Control
           type="text"
           value={username}
+          className="change-input"
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Username"
         />
@@ -118,6 +121,7 @@ function ChangeProfile() {
       <InputGroup className="mb-3">
         <Form.Control
           as="textarea"
+          className="change-post-textarea"
           rows={3}
           value={description}
           placeholder="Write something about yourself..."
@@ -130,6 +134,7 @@ function ChangeProfile() {
         <Form.Select
           value={font}
           onChange={(e) => setFont(e.target.value)}
+          className="change-post-select"
           style={{ minHeight: "20px" }}
         >
           <option value="">Select a font...</option>
@@ -143,16 +148,15 @@ function ChangeProfile() {
 
       <Form.Label className="change-profile-label">Save Changes?</Form.Label>
       <InputGroup className="mb-3">
-        <Button type="submit" disabled={loading}>
+        <button className="change-profile-btn" type="submit" disabled={loading}>
           {loading ? "Saving..." : "Save"}
-        </Button>
+        </button>
+          <button className="delete-profile-btn"  onClick={() => handleDelete()}>
+          DELETE PROFILE
+          </button>
       </InputGroup>
-
       {message && <p>{message}</p>}
     </Form>
-	   <Button type="button" onClick={() => handleDelete()}>
-	  DELETE PROFILE
-        </Button>
 	  </>
   );
 }
