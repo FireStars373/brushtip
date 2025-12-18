@@ -1,0 +1,33 @@
+.detectedAdd{
+    padding-right: 5rem;
+    padding-left: 5rem;
+    padding-top: 5rem;
+}
+.approveReq{
+    background-color: #1d2b27;
+    color:  #d4e0d6;
+    border: none;
+    margin-right: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.approveReq:hover {
+    background-color: #131a10;
+}
+
+.declineReq{
+    background-color: #670909;
+    color:  #d4e0d6;
+    border: none;
+    margin-top: 2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.declineReq:hover {
+    background-color: #400606;
+}
