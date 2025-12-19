@@ -1,22 +1,27 @@
 import { useState, useEffect } from "react";
 
-const BACKEND_URL = "http://localhost:5000";
-
-export default function useFetchUsers() {
-  const [data, setData] = useState([]);
+export default function useFetchPostById(id) {
+  const [post, setPost] = useState(null);
+  const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!id) return;
+
+    console.log("called fetch");
     const fetchData = async () => {
       try {
         setLoading(true);
+
+        console.log("inside fetch");
+        
         const token = localStorage.getItem("token");
-		  let response = null;
+        let response = null;
         if (!token) {
-           response = await fetch(`${BACKEND_URL}/api/users`);
+          response = await fetch(`http://localhost:5000/api/posts/${id}`);
         } else {
-          response = await fetch(`${BACKEND_URL}/api/users`, {
+         response = await fetch(`http://localhost:5000/api/posts/${id}`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -30,17 +35,19 @@ export default function useFetchUsers() {
         }
 
         const data = await response.json();
-        setData(data);
+
+        setPost(data.post);
+        setComments(data.comments);
         setLoading(false);
       } catch (err) {
-        setError(`Error fetching users data: ${err.message}`);
+        setError(`Error fetching post data: ${err.message}`);
         console.error("Error details:", err);
         setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
-  return { data, loading, error };
+  return { post, comments, loading, error };
 }

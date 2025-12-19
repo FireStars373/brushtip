@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import userRoutes from './routes/users.js';
 import postsRoutes from './routes/posts.js';
 import authRoutes from './routes/authorization.js';
+import commentRoutes from './routes/comments.js'
 import cors from 'cors';
 
 const app = express();
@@ -23,6 +24,7 @@ app.use('/assets', express.static('assets'));
 app.use(bodyParser.json());
 
 app.use("/api/users", userRoutes);
+app.use("/api/comments", commentRoutes);
 app.use("/api/posts", postsRoutes);
 app.use("/api/authorization", authRoutes);
 

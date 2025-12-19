@@ -24,8 +24,8 @@ function Post({User}) {
                 <img style={{opacity: "100%"}} src={imageUrl+User.post_image} alt={User.post_title} sizes="(min-width: 1415px) 750px, (min-width: 768px) 50vw, 100vw" width={500} height={450} />
             </div>
             <div className="post-interact">
-                <HeartButton like_count={User.like_count} />
-                <CommentButton comment_count={User.comment_count} />
+                <HeartButton like_count={User.like_count} isLikedDb={User.isLikedDb} post_id={User.post_id} />
+                <CommentButton comment_count={User.comment_count} postId={User.post_id} />
             </div>
         </div>
     );
