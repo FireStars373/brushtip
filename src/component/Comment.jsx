@@ -5,34 +5,23 @@ import {CornerDownRight} from "lucide-react";
 import {useParams} from "react-router-dom";
 
 function Comment({ comment }) {
-  const [showReply, setShowReply] = useState(false);
-  const me = JSON.parse(localStorage.getItem("user"));
-	const [replies, setReplies] = useState([]);
-	useEffect(() => {
-			setReplies(comment.replies);
-	}, [comment])
-  const [replyText, setReplyText] = useState("");
-	const BACKEND_URL = "http://localhost:5000/api"
-  const handleReplyToggle = () => {
-    setShowReply((prev) => !prev);
-  };
-
-	const { id } = useParams();
-  const handleReplySubmit = async (replyId) => {
-	  if (replyText === "") return;
-    try {
-      const token = localStorage.getItem("token");
-
+    const [showReply, setShowReply] = useState(false);
+    const me = JSON.parse(localStorage.getItem("user"));
+    const [replies, setReplies] = useState([]);
+    useEffect(() => {
+        setReplies(comment.replies);
+    }, [comment])
     const [replyText, setReplyText] = useState("");
     const BACKEND_URL = "http://localhost:5000/api"
     const handleReplyToggle = () => {
         setShowReply((prev) => !prev);
     };
 
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || "comment failed");
-	setReplies((prev) => [...(prev || []), {id: data.id, text: replyText, user: {username: me.username} }]
-        )
+    const { id } = useParams();
+    const handleReplySubmit = async (replyId) => {
+        if (replyText === "") return;
+        try {
+            const token = localStorage.getItem("token");
 
             const response = await fetch(`${BACKEND_URL}/comments/post`, {
                 method: "POST",
@@ -49,11 +38,7 @@ function Comment({ comment }) {
 
             const data = await response.json();
             if (!response.ok) throw new Error(data.message || "comment failed");
-            setReplies((prev) => [...(prev || []), {
-                    id: data.id,
-                    text: replyText,
-                    user: {username: comment.user.username}
-                }]
+            setReplies((prev) => [...(prev || []), {id: data.id, text: replyText, user: {username: me.username} }]
             )
 
         } catch (err) {
