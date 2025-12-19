@@ -3,6 +3,7 @@ import multer from "multer";
 import Database from "../database.js";
 import verifyToken from "../authMiddleware.js";
 import verifyTokenOptional from "../optAuth.js";
+import mockVerification from "./verifyByAI.js";
 const router = express.Router();
 
 //get all posts
@@ -37,9 +38,13 @@ router.post("/post", verifyToken, upload.single("image"), async (req, res) => {
 
     const postType = req.file ? 2 : 1;
     const imagePath = req.file ? req.file.path : null;
-
+	  let aiPercentage = 0;
+	  if (req.file) {
+		const { aiPercentage: result } = await mockVerification(imagePath) 
+		  aiPercentage = result;
+	  }
     const [result] = await Database.query(
-      "INSERT INTO posts (title, description, upload_date, comment_count, like_count, post_type, user_id, isActive, needsCheck) VALUES (?,?,?,?,?,?,?,?,?)",
+      "INSERT INTO posts (title, description, upload_date, comment_count, like_count, post_type, user_id, isActive, needsCheck, AI_percent) VALUES (?,?,?,?,?,?,?,?,?,?)",
       [
         title,
         description,
@@ -49,7 +54,8 @@ router.post("/post", verifyToken, upload.single("image"), async (req, res) => {
         postType,
         uid,
         postType === 1 ? 1 : 0,
-        postType === 1 ? 0 : 1,
+		postType === 1 ? 0 : (postType === 2 && aiPercentage > 0.5 ? 1 : 0),
+		aiPercentage,
       ],
     );
     const postId = result.insertId;
@@ -176,14 +182,17 @@ router.get("/:id", verifyTokenOptional, async (req, res) => {
   u.id AS user_id,
   u.username,
   u.profile_img,
-		  pl.user_id AS liked_by_user
+		  pl.user_id AS liked_by_user,
+		uf.follower_id as followed_by_user
 FROM posts p
 JOIN users u ON p.user_id = u.id
 LEFT JOIN post_images pi ON p.id = pi.post_id
 		  LEFT JOIN post_likes pl
         ON pl.post_id = p.id AND pl.user_id = ?
+		LEFT JOIN user_followers uf
+		ON uf.user_id = u.id AND uf.follower_id = ?
 WHERE p.id = ?      `,
-      [requesterId, postId],
+      [requesterId, requesterId, postId],
     );
 
     if (!postRows.length) {
@@ -193,6 +202,7 @@ WHERE p.id = ?      `,
     const post = postRows[0];
     // Attach isLiked boolean
     post.isLiked = !!post.liked_by_user;
+	post.isFollowing = !!post.followed_by_user;
     // 2️⃣ Get comments + replies
     const [commentRows] = await Database.query(
       `
@@ -302,5 +312,43 @@ router.delete("/like/:id", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
+router.patch(
+  "/updateActive/:id",
+  verifyToken,
+  async (req, res) => {
+    try {
+      const postId = req.params.id;
+        await Database.query(
+          `UPDATE posts SET needsCheck = 0 WHERE id = ?`,
+          [postId],
+        );
+
+
+      res.json({ message: "Post updated successfully" });
+    } catch (err) {
+      console.error("Error updating post:", err);
+      res.status(500).json({ message: err.message });
+    }
+  },
+);
+router.delete(
+  "/updateActive/:id",
+  verifyToken,
+  async (req, res) => {
+    try {
+      const postId = req.params.id;
+        await Database.query(
+          `DELETE FROM posts WHERE id = ?`,
+          [postId],
+        );
+
+
+      res.json({ message: "Post updated successfully" });
+    } catch (err) {
+      console.error("Error updating post:", err);
+      res.status(500).json({ message: err.message });
+    }
+  },
+);
 
 export default router;

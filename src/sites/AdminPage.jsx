@@ -16,7 +16,9 @@ function AdminPage() {
             {data.map((user) => user.posts.filter(post => post.needsCheck === 1).map((post) =>
                 <PostCheck key={post.id} User={{
                     name: user.username,
-                    post_image: BannerPicture,
+						id: post.id,
+                    post_image: post.image,
+					ai: post.ai,
                 }}
                 />
             ))}

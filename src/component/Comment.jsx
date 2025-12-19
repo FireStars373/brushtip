@@ -6,6 +6,7 @@ import {useParams} from "react-router-dom";
 
 function Comment({ comment }) {
   const [showReply, setShowReply] = useState(false);
+  const me = JSON.parse(localStorage.getItem("user"));
 	const [replies, setReplies] = useState([]);
 	useEffect(() => {
 			setReplies(comment.replies);
@@ -18,6 +19,7 @@ function Comment({ comment }) {
 
 	const { id } = useParams();
   const handleReplySubmit = async (replyId) => {
+	  if (replyText === "") return;
     try {
       const token = localStorage.getItem("token");
 
@@ -36,7 +38,7 @@ function Comment({ comment }) {
 
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || "comment failed");
-	setReplies((prev) => [...(prev || []), {id: data.id, text: replyText, user: {username: comment.user.username} }]
+	setReplies((prev) => [...(prev || []), {id: data.id, text: replyText, user: {username: me.username} }]
         )
 
     } catch (err) {
@@ -53,7 +55,7 @@ function Comment({ comment }) {
         <h4>{comment.user.username}</h4>
         <p>{comment.text}</p>
 
-        <div className="post-interact">
+	   <div className="post-interact">
           <HeartButton />
           <div
             style={{
@@ -62,6 +64,7 @@ function Comment({ comment }) {
               alignItems: "flex-start",
               gap: "0.5rem",
             }}
+	  
           >
             <CornerDownRight size={30} onClick={handleReplyToggle} />
             <p>{comment.replies?.length || 0}</p>

@@ -18,22 +18,24 @@ const [rows] = await Database.query(
 
     p.id as post_id, p.title, p.description as post_description, 
     p.upload_date, p.comment_count, p.like_count, 
-    p.post_type, p.isActive, p.needsCheck,
+    p.post_type, p.isActive, p.needsCheck, p.AI_percent,
 
     i.id as image_id, i.image,
 
-    pl.user_id as liked_by_user
-
+    pl.user_id as liked_by_user,
+	uf.follower_id as followed_by_user
   FROM users u
   LEFT JOIN posts p ON u.id = p.user_id
   LEFT JOIN post_images i ON p.id = i.post_id
   LEFT JOIN post_likes pl 
     ON pl.post_id = p.id 
     AND pl.user_id = ?
-
+  LEFT JOIN user_followers uf
+	ON uf.user_id = u.id
+	AND uf.follower_id = ?
   ORDER BY u.id, p.upload_date DESC
   `,
-  [requesterId]
+  [requesterId, requesterId]
 );
 
     // group posts under each user
@@ -49,6 +51,7 @@ const [rows] = await Database.query(
           banner_img: row.banner_img,
           is_Admin: row.is_Admin,
           profile_font: row.profile_font,
+			isFollowing: !!row.followed_by_user,
           posts: [],
         };
       }
@@ -67,6 +70,7 @@ const [rows] = await Database.query(
           image_id: row.image_id, // <-- added
           image: row.image,
 			 isLiked: !!row.liked_by_user,
+			ai: row.AI_percent
         });
       }
     });
@@ -200,6 +204,43 @@ router.delete("/profile", verifyToken, async (req, res) => {
       uid,
     ]);
     res.json({ message: "Profile deleted successfully" });
+  } catch (err) {
+    console.error(err.stack);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+router.post("/follow/:id", verifyToken, async (req, res) => {
+  try {
+    const uid = req.id;
+    const postId = req.params.id;
+
+    const [result] = await Database.query(
+      "INSERT INTO user_followers (user_id, follower_id) VALUES (?,?)",
+      [postId, uid],
+    );
+    res.json({ message: "person followd successfully" });
+  } catch (err) {
+    console.error(err.stack);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+router.delete("/follow/:id", verifyToken, async (req, res) => {
+  try {
+    const uid = req.id;
+    const postId = req.params.id;
+
+    const [result] = await Database.query(
+      "DELETE FROM user_followers WHERE user_id = ? AND follower_id = ?",
+      [postId, uid],
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(400).json({ message: "not followin shit" });
+    }
+
+
+    res.json({ message: "!FOLLOW successfully" });
   } catch (err) {
     console.error(err.stack);
     res.status(500).json({ message: "Server error", error: err.message });

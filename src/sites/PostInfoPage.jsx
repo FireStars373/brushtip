@@ -8,6 +8,7 @@ import useFetchPostById from "../hooks/useFetchPostById.js";
 import { useEffect, useState } from "react";
 
 function PostInfoPage() {
+  const me = JSON.parse(localStorage.getItem("user"));
   const BACKEND_URL = "http://localhost:5000/api";
   const { id } = useParams();
   const { post, comments, loading, error } = useFetchPostById(id);
@@ -21,6 +22,8 @@ function PostInfoPage() {
   if (!post) return <p>Post not found</p>;
   const handleComment = async (e) => {
     e.preventDefault();
+
+	  if (comment_text === "") return;
     try {
       const token = localStorage.getItem("token");
 
@@ -41,7 +44,7 @@ function PostInfoPage() {
       if (!response.ok) throw new Error(data.message || "comment failed");
       setNormCom((prev) => [
         ...prev,
-        { id: data.id, text: comment_text, user: { username: post.username } },
+        { id: data.id, text: comment_text, user: { username: me.username } },
       ]);
       setComment_text("");
     } catch (err) {
