@@ -55,14 +55,12 @@ function AddPost() {
               <input type="text" placeholder="Post title" value={title} onChange={(e) => setTitle(e.target.value)} />
               <textarea placeholder="Write description..." value={description} onChange={(e) => setDescription(e.target.value)} />
               <input className="change-profile-btn" type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
-              <button type="submit" className="add-btn">Submit</button>
+              <button type="submit" className="add-btn" onClick={() => window.location.reload()}>Submit</button>
             </form>
           </div>
         </div>
       )}
     </>
   );
-}//<div className="post-image">
-// <img style={{opacity: "100%"}} src={BannerPicture}  alt={"No image"}  width={200} height={200}></img>
-//</div>
+}
 export default AddPost;

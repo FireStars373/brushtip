@@ -15,7 +15,7 @@ function ProfileLayout() {
             <div className="profile-banner">
                 <img className="profile-banner-img" src={imgURL+user.banner_img} alt="profile picture"/>
                 <div className="profile-info">
-                    <Profile User={{picture: user.profile_img, name: user.username, profile_description: user.description}}/>
+                    <Profile User={{picture: user.profile_img, name: user.username, profile_description: user.description, user_font: user.profile_font}}/>
                 </div>
             </div>
 

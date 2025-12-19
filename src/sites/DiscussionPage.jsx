@@ -10,7 +10,7 @@ function DiscussionPage() {
     return (
         <div>
             {data.filter(post => post.post_type === 1).map((post) =>
-                <Question post={{post_title: post.title, post_description: post.description}}></Question>
+                <Question post={{post_id: post.id,post_title: post.title, post_description: post.description}}></Question>
             )}
         </div>
     )

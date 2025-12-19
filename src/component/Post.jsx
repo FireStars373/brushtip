@@ -66,14 +66,16 @@ function Post({ User }) {
         <p style={{ color: "#121111" }}>{User.post_description}</p>
       </div>
       <div className="post-image">
-        <img
-          style={{ opacity: "100%" }}
-          src={imageUrl + User.post_image}
-          alt={User.post_title}
-          sizes="(min-width: 1415px) 750px, (min-width: 768px) 50vw, 100vw"
-          width={500}
-          height={450}
-        />
+       {User.post_image && (
+                    <img
+                        style={{ opacity: "100%" }}
+                        src={imageUrl + User.post_image}
+                        alt={User.post_title}
+                        sizes="(min-width: 1415px) 750px, (min-width: 768px) 50vw, 100vw"
+                        width={500}
+                        height={450}
+                    />
+                )}
       </div>
       <div className="post-interact">
         <HeartButton
