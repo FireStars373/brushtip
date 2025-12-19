@@ -8,7 +8,7 @@ function Post({User}) {
         <div className="post-card">
             <div className="post-name">
                 <h2 style={{color: "#d4e0d6"}}>@{User.name}</h2>
-                <h4 style={{color: "#670909"}}>Pending Request //ideti ir sutapties procenta</h4>
+                <h4 style={{color: "#670909"}}>Pending Request</h4>
             </div>
             <div className="post-description">
                 <h3>{User.post_title}</h3>

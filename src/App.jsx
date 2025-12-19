@@ -23,7 +23,7 @@ function App() {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/PostInfoPage/:id" element={<PostInfoPage />} />
                     <Route path="/DiscussionPage" element={<DiscussionPage />} />
-                    <Route path="/DiscussionInfoPage" element={<DiscussionInfoPage />} />
+                    <Route path="/DiscussionInfoPage/:id" element={<DiscussionInfoPage />} />
                 </Route>
                 <Route path="/" element={<ProfileLayout />} >
                     <Route path="/ProfilePage" element={<ProfilePage />} />

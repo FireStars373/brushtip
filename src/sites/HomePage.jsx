@@ -5,6 +5,7 @@ import BannerPicture from "../assets/TempBannerPic.jpg";
 import useFetchUsers from "../hooks/useFetchUsers.js";
 import {useEffect} from 'react';
 
+
 function HomePage() {
     const { data, loading, error } = useFetchUsers();
 

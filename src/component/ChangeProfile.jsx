@@ -11,9 +11,10 @@ function ChangeProfile() {
   const [description, setDescription] = useState("");
   const [font, setFont] = useState(0);
   const [username, setUsername] = useState("");
-	const navigate = useNavigate();
+  const navigate = useNavigate();
   const [message, setMessage] = useState("");
-	const {user, loading, error} = useFetchProfile();
+  const {user, loading, error} = useFetchProfile();
+
   useEffect(() => {
     if (user) {
       setUsername(user.username || "");
@@ -106,17 +107,6 @@ function ChangeProfile() {
         />
       </InputGroup>
 
-      <Form.Label className="change-profile-label">Change Username</Form.Label>
-      <InputGroup className="mb-3">
-        <Form.Control
-          type="text"
-          value={username}
-          className="change-input"
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
-        />
-      </InputGroup>
-
       <Form.Label className="change-profile-label">Change Description</Form.Label>
       <InputGroup className="mb-3">
         <Form.Control
@@ -148,7 +138,7 @@ function ChangeProfile() {
 
       <Form.Label className="change-profile-label">Save Changes?</Form.Label>
       <InputGroup className="mb-3">
-        <button className="change-profile-btn" type="submit" disabled={loading}>
+        <button className="change-profile-btn" type="submit" disabled={loading}  onClick={() => window.location.reload()}>
           {loading ? "Saving..." : "Save"}
         </button>
           <button className="delete-profile-btn"  onClick={() => handleDelete()}>
