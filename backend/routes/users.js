@@ -4,19 +4,37 @@ import verifyToken from "../authMiddleware.js";
 import multer from "multer";
 const router = express.Router();
 import { upload } from "./posts.js"
+import verifyTokenOptional from "../optAuth.js";
 //gets users and their posts
-router.get("/", async (req, res) => {
+router.get("/", verifyTokenOptional, async (req, res) => {
   try {
-    const [rows] = await Database.query(`
-      SELECT 
-        u.id as user_id, u.username, u.email, u.description, u.profile_img, u.banner_img, u.is_Admin, u.profile_font,
-        p.id as post_id, p.title, p.description as post_description, p.upload_date, p.comment_count, p.like_count, p.post_type, p.isActive, p.needsCheck,
-        i.id as image_id, i.image
-      FROM users u
-      LEFT JOIN posts p ON u.id = p.user_id
-	  LEFT JOIN post_images i ON p.id = i.post_id
-      ORDER BY u.id, p.upload_date DESC
-    `);
+    const requesterId = req.id; // number or null
+
+const [rows] = await Database.query(
+  `
+  SELECT 
+    u.id as user_id, u.username, u.email, u.description, 
+    u.profile_img, u.banner_img, u.is_Admin, u.profile_font,
+
+    p.id as post_id, p.title, p.description as post_description, 
+    p.upload_date, p.comment_count, p.like_count, 
+    p.post_type, p.isActive, p.needsCheck,
+
+    i.id as image_id, i.image,
+
+    pl.user_id as liked_by_user
+
+  FROM users u
+  LEFT JOIN posts p ON u.id = p.user_id
+  LEFT JOIN post_images i ON p.id = i.post_id
+  LEFT JOIN post_likes pl 
+    ON pl.post_id = p.id 
+    AND pl.user_id = ?
+
+  ORDER BY u.id, p.upload_date DESC
+  `,
+  [requesterId]
+);
 
     // group posts under each user
     const usersMap = {};
@@ -48,6 +66,7 @@ router.get("/", async (req, res) => {
           needsCheck: row.needsCheck,
           image_id: row.image_id, // <-- added
           image: row.image,
+			 isLiked: !!row.liked_by_user,
         });
       }
     });

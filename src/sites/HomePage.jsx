@@ -24,6 +24,8 @@ function HomePage() {
                     like_count: post.like_count,
                     comment_count: post.comment_count,
 					profile_img: user.profile_img,
+					post_id: post.id,
+						isLikedDb: post.isLiked
                 }}
                 />
             ))}

@@ -21,7 +21,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<MainLayout />} >
                     <Route path="/" element={<HomePage />} />
-                    <Route path="/PostInfoPage" element={<PostInfoPage />} />
+                    <Route path="/PostInfoPage/:id" element={<PostInfoPage />} />
                     <Route path="/DiscussionPage" element={<DiscussionPage />} />
                     <Route path="/DiscussionInfoPage" element={<DiscussionInfoPage />} />
                 </Route>

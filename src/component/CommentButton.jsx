@@ -1,10 +1,10 @@
 import {useNavigate} from "react-router-dom";
 import {MessageSquareMore} from "lucide-react";
 
-function CommentButton({comment_count}) {
+function CommentButton({comment_count, postId}) {
     const navigate = useNavigate()
     function CommentClick(){
-        navigate("/PostInfoPage")
+        navigate("/PostInfoPage/"+postId)
     }
     return (
         <div style={{display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
