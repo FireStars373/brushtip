@@ -5,8 +5,7 @@ import BannerPicture from "../assets/TempBannerPic.jpg";
 import useFetchUsers from "../hooks/useFetchUsers.js";
 import {useEffect} from 'react';
 
-
-function HomePage() {
+function FollowingPostsPage() {
     const { data, loading, error } = useFetchUsers();
 
 	useEffect(() => { console.log(data)}, [data])
@@ -15,7 +14,7 @@ function HomePage() {
 
     return (
         <div>
-            {data.map((user) => user.posts.filter(post => post.post_type === 2 && post.needsCheck === 0).map((post) =>
+            {data.filter(user => user.isFollowing === true).map((user) => user.posts.filter(post => post.post_type === 2 && post.needsCheck === 0 ).map((post) =>
                 <Post key={post.id} User={{
                     picture: ProfilePicture,
                     name: user.username,
@@ -36,4 +35,4 @@ function HomePage() {
     )
 }
 
-export default HomePage
+export default FollowingPostsPage

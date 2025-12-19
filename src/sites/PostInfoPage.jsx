@@ -8,21 +8,24 @@ import useFetchPostById from "../hooks/useFetchPostById.js";
 import {useEffect, useState} from "react";
 
 function PostInfoPage() {
-    const BACKEND_URL = "http://localhost:5000/api";
-    const {id} = useParams();
-    const {post, comments, loading, error} = useFetchPostById(id);
-    const [normCom, setNormCom] = useState([]);
-    useEffect(() => {
-        setNormCom(comments);
-    }, [comments]);
-    const [comment_text, setComment_text] = useState("");
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>{error}</p>;
-    if (!post) return <p>Post not found</p>;
-    const handleComment = async (e) => {
-        e.preventDefault();
-        try {
-            const token = localStorage.getItem("token");
+  const me = JSON.parse(localStorage.getItem("user"));
+  const BACKEND_URL = "http://localhost:5000/api";
+  const { id } = useParams();
+  const { post, comments, loading, error } = useFetchPostById(id);
+  const [normCom, setNormCom] = useState([]);
+  useEffect(() => {
+    setNormCom(comments);
+  }, [comments]);
+  const [comment_text, setComment_text] = useState("");
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+  if (!post) return <p>Post not found</p>;
+  const handleComment = async (e) => {
+    e.preventDefault();
+
+	  if (comment_text === "") return;
+    try {
+      const token = localStorage.getItem("token");
 
             const response = await fetch(`${BACKEND_URL}/comments/post`, {
                 method: "POST",
@@ -37,17 +40,17 @@ function PostInfoPage() {
                 }),
             });
 
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.message || "comment failed");
-            setNormCom((prev) => [
-                ...prev,
-                {id: data.id, text: comment_text, user: {username: post.username}},
-            ]);
-            setComment_text("");
-        } catch (err) {
-            console.log(err.message);
-        }
-    };
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "comment failed");
+      setNormCom((prev) => [
+        ...prev,
+        { id: data.id, text: comment_text, user: { username: me.username } },
+      ]);
+      setComment_text("");
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
     return (
         <div>

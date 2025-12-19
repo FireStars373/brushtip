@@ -4,13 +4,24 @@ import {Button, Form} from "react-bootstrap";
 import {CornerDownRight} from "lucide-react";
 import {useParams} from "react-router-dom";
 
-function Comment({comment}) {
-    const [showReply, setShowReply] = useState(false);
-    const [replies, setReplies] = useState([]);
+function Comment({ comment }) {
+  const [showReply, setShowReply] = useState(false);
+  const me = JSON.parse(localStorage.getItem("user"));
+	const [replies, setReplies] = useState([]);
+	useEffect(() => {
+			setReplies(comment.replies);
+	}, [comment])
+  const [replyText, setReplyText] = useState("");
+	const BACKEND_URL = "http://localhost:5000/api"
+  const handleReplyToggle = () => {
+    setShowReply((prev) => !prev);
+  };
 
-    useEffect(() => {
-        setReplies(comment.replies);
-    }, [comment])
+	const { id } = useParams();
+  const handleReplySubmit = async (replyId) => {
+	  if (replyText === "") return;
+    try {
+      const token = localStorage.getItem("token");
 
     const [replyText, setReplyText] = useState("");
     const BACKEND_URL = "http://localhost:5000/api"
@@ -18,10 +29,10 @@ function Comment({comment}) {
         setShowReply((prev) => !prev);
     };
 
-    const {id} = useParams();
-    const handleReplySubmit = async (replyId) => {
-        try {
-            const token = localStorage.getItem("token");
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "comment failed");
+	setReplies((prev) => [...(prev || []), {id: data.id, text: replyText, user: {username: me.username} }]
+        )
 
             const response = await fetch(`${BACKEND_URL}/comments/post`, {
                 method: "POST",

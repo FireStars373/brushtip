@@ -1,7 +1,7 @@
 import {Button, Form, InputGroup, Offcanvas} from "react-bootstrap";
 import React, {useState} from "react";
 import "../styles/Login.css";
-import {data} from "react-router-dom";
+import {data, useNavigate} from "react-router-dom";
 
 
 function LoginForm({handleClose}) {
@@ -12,7 +12,7 @@ function LoginForm({handleClose}) {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [message, setMessage] = useState("");
-
+	const navigate = useNavigate();
     const BACKEND_URL = "http://localhost:5000/api/authorization";
 
     //register handler
@@ -50,6 +50,8 @@ function LoginForm({handleClose}) {
 
             localStorage.setItem("token", data.token);
             localStorage.setItem("user", JSON.stringify(data.user));
+			if (data.user.is_admin === 1)
+				navigate("/AdminPage")
 			handleClose(false);
            // setMessage(localStorage.getItem("token"));
         } catch (err) {
