@@ -3,7 +3,6 @@ import "../styles/Profile.css"
 import Profile from "../component/Profile.jsx";
 import useFetchProfile from "../hooks/useFetchProfile.js";
 function ProfileLayout() {
-    //temp data if nothing fucking works
     const {user, loading, error } = useFetchProfile();	
 	const imgURL = "http://localhost:5000/";
 

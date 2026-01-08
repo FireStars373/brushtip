@@ -33,7 +33,7 @@ function TodayDiscussionPage() {
   return (
     <div>
       {todaysPosts.map(({ post, user }) => (
-        <Question post={{post_title: post.title, post_description: post.description}}></Question>
+        <Question post={{post_id: post.id,post_title: post.title, post_description: post.description}}></Question>
       ))}
     </div>
   );

@@ -93,7 +93,15 @@ function ProfilePost({posts = []}) {
                     <Col key={post.id} xs={12} sm={6} md={4} lg={3}>
                         <div className="profile-post">
                             <div className="profile-post-image">
-                                <img src={url + post.image} alt={post.title}/>
+                                {post.image ? (<img src={url + post.image} alt={post.title}/>) :
+                                    (<h4 style={{
+                                        margin: "5rem",
+                                        whiteSpace: "nowrap",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis",
+                                        minWidth: 0
+                                    }}>{post.title}</h4>)}
+
                             </div>
                             <div className="profile-post-overlay">
                                 <div

@@ -37,10 +37,7 @@ function App() {
 
           <Route path="/posts/new" element={<NewPostsPage />} />
           <Route path="/posts/today" element={<TodayPostsPage />} />
-          <Route
-            path="/posts/follwing"
-            element={<FollowingPostsPage />}
-          />
+          <Route path="/posts/follwing" element={<FollowingPostsPage />} />
           <Route path="/posts/top" element={<TopPostsPage />} />
 
           <Route path="/DiscussionInfoPage/:id" element={<DiscussionInfoPage />} />

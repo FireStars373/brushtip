@@ -47,6 +47,7 @@ function ChangeProfile() {
       const data = await res.json();
       if (res.ok) {
         setMessage("Profile updated successfully!");
+        window.location.reload()
       } else {
         setMessage(`Error: ${data.message}`);
       }
@@ -138,7 +139,7 @@ function ChangeProfile() {
 
       <Form.Label className="change-profile-label">Save Changes?</Form.Label>
       <InputGroup className="mb-3">
-        <button className="change-profile-btn" type="submit" disabled={loading}  onClick={() => window.location.reload()}>
+        <button className="change-profile-btn" type="submit" disabled={loading} >
           {loading ? "Saving..." : "Save"}
         </button>
           <button className="delete-profile-btn"  onClick={() => handleDelete()}>

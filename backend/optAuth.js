@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = "supersecretkey"; // use process.env.JWT_SECRET in production
+const JWT_SECRET = "supersecretkey"; //process.env.JWT_SECRET
 
 export default function verifyTokenOptional(req, res, next) {
   console.log("🔹 verifyTokenOptional middleware triggered");
@@ -9,7 +9,7 @@ export default function verifyTokenOptional(req, res, next) {
 
   const authHeader = req.headers.authorization;
 
-  // 🔓 No token → continue as unauthenticated
+  // No token continue as unauthenticated
   if (!authHeader) {
     req.id = null;
     return next();
@@ -22,7 +22,7 @@ export default function verifyTokenOptional(req, res, next) {
     req.id = decoded.id; // authenticated user
     next();
   } catch (err) {
-    // 🚫 Token was provided but invalid
+    //Token invalid
     return res.status(401).json({ message: "Invalid token" });
   }
 }
